@@ -16,22 +16,22 @@ Am folosit https://github.com/jgarff/rpi_ws281x cu mentiunea ca am modificat fis
 
 ##############################################################################################################################
 
-for (l = 4; l >= 0; l--)               // Symbol
-                    {
-                        uint32_t *wordptr = &((uint32_t *)pwm_raw)[wordpos];
+ for (l = 4; l >= 0; l--)
+   {
+          uint32_t *wordptr = &((uint32_t *)pwm_raw)[wordpos];
 
-                        *wordptr &= ~(1 << bitpos);
-                        if (symbol & (1 << l))
-                        {
-                            *wordptr |= (1 << bitpos);
-                        }
+          *wordptr &= ~(1 << bitpos);
+          if (symbol & (1 << l))
+          {
+              *wordptr |= (1 << bitpos);
+          }
 
-                        bitpos--;
-                        if (bitpos < 0)
-                        {
-                            // Every other word is on the same channel
-                            wordpos += 2;
+          bitpos--;
+          if (bitpos < 0)
+          {
+              // Every other word is on the same channel
+              wordpos += 2;
 
-                            bitpos = 31;
-                        }
-                    }
+              bitpos = 31;
+          }
+      }
