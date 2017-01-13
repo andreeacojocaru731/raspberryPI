@@ -1,10 +1,81 @@
 # statie_meteo
 
-Citire temperatura de la un senzor digital. 
+Monitorizarea temperaturii ambientale
 
 ## Author : Cojocaru Andreea
 
-Am folosit https://github.com/jgarff/rpi_ws281x cu mentiunea ca am modificat fisierul ws2811.c, astfel :
+Descriere:
+
+Se salveaza temperatura la momentul pornirii aplicatiei ca si temperatura initiala.
+Se verifica temperatura curenta cu valoarea initiala, iar in functie de diferenta dintre ele se va aprinde un led RGB intr-o anumita culoare.
+
+Initial va fi verde, urmand sa varieze :
+- in nuante de albastru, daca temperatura ambientala scade; 
+- in nuante de la galben->portocaliu->rosu, daca temperatura e mai mare decat cea initiala.
+Am ales ca si treapta, valoarea de 0.5 gradeC.
+
+
+Componente fizice utilizate:
+
+- placuta RaspberryPI B+
+- card mSD 32GB
+- senzor temperatura DS18B20 ( http://cdn.sparkfun.com/datasheets/Sensors/Temp/DS18B20.pdf )
+- rezistor 4.7kohm
+- led RGB APA-106-F8 ( https://cdn.sparkfun.com/datasheets/Components/LED/COM-12877.pdf )
+- fire de legatura mama-tata
+- fire de legatura tata-tata
+- mini breadboard
+
+Conexiuni:
+
+- Se foloseste interfata GPIO a placutei Raspberry.
+- La pinul 2 (VCC) al placutei Raspberry am legat alimentarea de 5V.
+- Senzorul de temperatura se leaga astfel : 
+	~ pinul 1 (GND) la pinul 6(GND) de la raspberry.
+	~ pinul 2 (DQ - date) la pinul 7 (GPIO4) de la raspberry.
+	~ pinul 3 (VCC) la pinul 2(VCC) de la raspberry.
+- Rezistorul se cupleaza la pinii 2 si 3 ai senzorului de temperatura.
+- Ledul are 4 pini, dupa cum urmeaza:
+	~ pinul 1 (DIN) - se leaga la pinul 12(GPIO18 - PWM) de la raspberry.
+	~ pinul 2 (VDD) - se leaga la pinul 2 de la raspberry.
+	~ pinul 3 (GND) - se leaga la pinul 3 de la raspberry.
+	~ pinul 4 (DOUT) - daca se folosesc leduri in serie, pinul 1 al ledului numarul 2 se leaga la pinul 4 al ledului numarul 1.
+
+Detalii software:
+
+- Pe RaspberryPI ruleaza SO Jessi.
+- Pentru conectare am folosit programul Putty.
+- Tipul legaturii este SSH pe portul 22.
+- De obicei, este necesara logarea. 
+- Userul predefinit este pi.
+- Parola predefinita este raspberry.
+- Pentru actualizarea OS se ruleaza :
+sudo apt-get update
+sudo apt-get upgrade
+- Limbajul de programare ales este python.
+
+
+Configurarea senzorului de temperatura :
+
+- Se adauga linia 
+dtoverlay=w1-gpio 
+- in fisierul 
+/boot/config.txt .
+- Se iese din fisier si se ruleaza urmatoarele linii :
+cd
+sudo modprobe w1-gpio
+sudo modprobe w1-therm
+
+- Pentru accesarea fisierului in care vor fi salvate valorile citite se alege calea :
+/sys/bus/w1/devices/
+- Aici este creat automat un director ce difera ca nume de la un caz la altul 
+( in situatia mea, denumirea este 28-0000075f800d ).
+- In interiorul acestuia se regaseste fisierul ce ne intereseaza, si anume 
+w1_slave.
+
+Comandarea ledului :
+
+- Am folosit https://github.com/jgarff/rpi_ws281x cu mentiunea ca am modificat fisierul ws2811.c, astfel :
 
 ```diff
 
