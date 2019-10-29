@@ -14,7 +14,8 @@ Initial va fi verde, urmand sa varieze :
 - in nuante de la galben->portocaliu->rosu, daca temperatura e mai mare decat cea initiala.
 Am ales ca si treapta, valoarea de 0.5 gradeC.
 
-
+Proof of working: [video1](https://drive.google.com/open?id=0B717Bl1S-5MGR28zaVU1ak0xamc), [video2](https://drive.google.com/open?id=0B717Bl1S-5MGekNQS3dyakpsSTQ)
+ 
 Componente fizice utilizate:
 
 - placuta RaspberryPI B+
@@ -30,16 +31,16 @@ Conexiuni:
 
 - Se foloseste interfata GPIO a placutei Raspberry.
 - La pinul 2 (VCC) al placutei Raspberry am legat alimentarea de 5V.
-- Senzorul de temperatura se leaga astfel : 
-	~ pinul 1 (GND) la pinul 6(GND) de la raspberry.
-	~ pinul 2 (DQ - date) la pinul 7 (GPIO4) de la raspberry.
-	~ pinul 3 (VCC) la pinul 2(VCC) de la raspberry.
+- Senzorul de temperatura se leaga astfel :
+ - pinul 1 (GND) la pinul 6(GND) de la raspberry.
+ - pinul 2 (DQ - date) la pinul 7 (GPIO4) de la raspberry.
+ - pinul 3 (VCC) la pinul 2(VCC) de la raspberry.
 - Rezistorul se cupleaza la pinii 2 si 3 ai senzorului de temperatura.
 - Ledul are 4 pini, dupa cum urmeaza:
-	~ pinul 1 (DIN) - se leaga la pinul 12(GPIO18 - PWM) de la raspberry.
-	~ pinul 2 (VDD) - se leaga la pinul 2 de la raspberry.
-	~ pinul 3 (GND) - se leaga la pinul 3 de la raspberry.
-	~ pinul 4 (DOUT) - daca se folosesc leduri in serie, pinul 1 al ledului numarul 2 se leaga la pinul 4 al ledului numarul 1.
+ - pinul 1 (DIN) - se leaga la pinul 12(GPIO18 - PWM) de la raspberry.
+ - pinul 2 (VDD) - se leaga la pinul 2 de la raspberry.
+ - pinul 3 (GND) - se leaga la pinul 3 de la raspberry.
+ - pinul 4 (DOUT) - daca se folosesc leduri in serie, pinul 1 al ledului numarul 2 se leaga la pinul 4 al ledului numarul 1.
 
 Detalii software:
 
